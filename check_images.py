@@ -3,8 +3,8 @@
 # */AIPND-revision/intropyproject-classify-pet-images/check_images.py
 #
 # TODO 0: Add your information below for Programmer & Date Created.                                                                             
-# PROGRAMMER: 
-# DATE CREATED:                                  
+# PROGRAMMER: Dalah al-hashlamoon
+# DATE CREATED:  26-5-2023                                
 # REVISED DATE: 
 # PURPOSE: Classifies pet images using a pretrained CNN model, compares these
 #          classifications to the true identity of the pets in the images, and
@@ -74,7 +74,7 @@ def main():
     #             classify_images(in_arg.dir, results, in_arg.arch)
     # Creates Classifier Labels with classifier function, Compares Labels, 
     # and adds these results to the results dictionary - results
-    classify_images(None, results, None)
+    classify_images(in_arg.dir, results, in_arg.arch)
 
     # Function that checks Results Dictionary using results    
     check_classifying_images(results)    
