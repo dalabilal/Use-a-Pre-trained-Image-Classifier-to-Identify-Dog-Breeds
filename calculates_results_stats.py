@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/calculates_results_stats.py
 #                                                                             
-# PROGRAMMER:
-# DATE CREATED:                                  
+# PROGRAMMER: Dalah al-hashlamoon
+# DATE CREATED:  27-5-2023                                
 # REVISED DATE: 
 # PURPOSE: Create a function calculates_results_stats that calculates the 
 #          statistics of the results of the programrun using the classifier's model 
@@ -70,4 +70,71 @@ def calculates_results_stats(results_dic):
     """        
     # Replace None with the results_stats_dic dictionary that you created with 
     # this function 
-    return None
+    results_stats_dic = dict()
+    results_stats_dic['n_dogs_img'] = 0.0000000001
+    results_stats_dic['n_match'] = 0.0000000001
+    results_stats_dic['n_correct_dogs'] = 0.0000000001
+    results_stats_dic['n_correct_notdogs'] = 0.0000000001
+    results_stats_dic['n_correct_breed'] = 0.0000000001
+    
+    for key in results_dic:       
+        # Labels Match Exactly
+        if results_dic[key][2] == 1:
+                results_stats_dic['n_match'] += 1
+
+        if results_dic[key][2] == 1:
+          if results_dic[key][4] == 1:
+                results_stats_dic['n_correct_breed'] += 1
+
+        if results_dic[key][3] == 1:
+           results_stats_dic['n_dogs_img'] += 1
+        
+        # Classifier classifies image as Dog (& pet image is a dog)
+        # counts number of correct dog classifications
+        if results_dic[key][4] == 1:
+           results_stats_dic['n_correct_dogs'] += 1
+
+        else:
+            # Classifier classifies image as NOT a Dog(& pet image isn't a dog)
+            # counts number of correct NOT dog clasifications.
+          if results_dic[key][4] == 0:
+                results_stats_dic['n_correct_notdogs'] += 1
+
+        results_stats_dic['n_images'] = len(results_dic)
+
+        results_stats_dic['n_notdogs_img'] = (results_stats_dic['n_images'] - 
+                                      results_stats_dic['n_dogs_img']) 
+        
+               
+        results_stats_dic['pct_match'] = (results_stats_dic['n_match'] / results_stats_dic['n_images'] ) * 100.0
+
+        # TODO: 5d. REPLACE zero(0.0) with CODE that calculates the % of correctly
+        #           classified dog images. Recall that this can be calculated by 
+        #           the number of correctly classified dog images('n_correct_dogs')
+        #           divided by the number of dog images('n_dogs_img'). This result 
+        #           will need to be multiplied by 100.0 to provide the percentage.
+        #    
+        # Calculates % correct dogs
+        results_stats_dic['pct_correct_dogs'] = (results_stats_dic['n_correct_dogs'] / results_stats_dic['n_dogs_img']) * 100.0
+
+        # TODO: 5e. REPLACE zero(0.0) with CODE that calculates the % of correctly
+        #           classified breeds of dogs. Recall that this can be calculated 
+        #           by the number of correctly classified breeds of dog('n_correct_breed') 
+        #           divided by the number of dog images('n_dogs_img'). This result 
+        #           will need to be multiplied by 100.0 to provide the percentage.
+        #    
+        # Calculates % correct breed of dog
+        results_stats_dic['pct_correct_breed'] = (results_stats_dic['n_correct_breed'] / results_stats_dic['n_dogs_img']) * 100.0
+
+        # Calculates % correct not-a-dog images
+        # Uses conditional statement for when no 'not a dog' images were submitted 
+        if results_stats_dic['n_notdogs_img'] > 0:
+                results_stats_dic['pct_correct_notdogs'] = (results_stats_dic['n_correct_notdogs'] /
+                                                        results_stats_dic['n_notdogs_img'])*100.0
+        else:
+                results_stats_dic['pct_correct_notdogs'] = 0.0
+
+                
+        # TODO 5f. REPLACE None with the results_stats_dic dictionary that you 
+        # created with this function 
+        return results_stats_dic
